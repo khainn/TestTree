@@ -1,0 +1,59 @@
+.plus, .minus {
+    display: inline-block; 
+background-repeat: no-repeat;
+background-size: 16px 16px !important;
+width: 16px;
+height: 16px; 
+    /*vertical-align: middle;*/
+}
+
+.plus {
+    background-image: url(https://img.icons8.com/color/48/000000/plus.png);
+}
+
+.minus {
+    background-image: url(https://img.icons8.com/color/48/000000/minus.png);
+}
+
+ul {
+    list-style: none;
+    padding: 0px 0px 0px 20px;
+}
+
+    ul.inner_ul li:before {
+        content: "├";
+        font-size: 18px;
+        margin-left: -11px;
+        margin-top: -5px;
+        vertical-align: middle;
+        float: left;
+        width: 8px;
+        color: #41424e;
+    }
+
+    ul.inner_ul li:last-child:before {
+        content: "└";
+    }
+
+.inner_ul {
+    padding: 0px 0px 0px 35px;
+}
+
+.container-tree {
+    border: 2px solid #ccc;
+    padding: 10px;
+    width: 20em;
+}
+
+.search-bar {
+    width: 220px;
+    height: 30px;
+    font-size: 13px;
+    padding: 0px 20px 0px 40px;
+    border-radius: 5px;
+    outline: none;
+    border: solid gray 2px;
+    /* background: url(../images/icon/search.png) 7px center no-repeat; */
+    background: url(https://img.icons8.com/carbon-copy/48/000000/search.png) top left;
+    height: 30px;
+}
