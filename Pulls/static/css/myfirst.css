@@ -54,6 +54,6 @@ ul {
     outline: none;
     border: solid gray 2px;
     /* background: url(../images/icon/search.png) 7px center no-repeat; */
-    background: url(https://img.icons8.com/carbon-copy/48/000000/search.png) top left;
+    background-image: url(https://img.icons8.com/carbon-copy/48/000000/search.png) top left;
     height: 30px;
 }
