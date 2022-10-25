@@ -9,13 +9,13 @@
             "request": "launch",
             "reAttach": true,
             "name": "Launch localhost",
-            "url": "http://127.0.0.1:8000/view/",
-            "webRoot": "${workspaceFolder}",
+            "url": "http://127.0.0.1:8000/tree",
+            "webRoot": "${workspaceFolder}/SearchTree",
             "pathMappings": [
                 {
                     "url": "http://127.0.0.1:8000",
-                    "path": "${workspaceFolder}/Pulls"
-                }
+                    "path": "${workspaceFolder}/SearchTree"
+                },
             ]
         }
     ]
