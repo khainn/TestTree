@@ -11,41 +11,71 @@
 <script src="{% static 'js/myfirst.js' %}" type="text/javascript"></script>
 
 <body>
-    <div class="exclaim">Tree Select</div>
+    <div class="exclaim">Tree Select </div>
     <div class="container-tree">
         <div>
-            <input id="searchRegion" class="search-bar" type="search" placeholder="Search...">
+            <input class="search-bar" type="search" placeholder="Search...">
         </div>
+
         <div class="tree_main">
             <ul id="bs_main" class="main_ul">
                 <li id="bs_1">
-                    <span class="plus">&nbsp;</span>
-                    <input type="checkbox" id="c_bs_1" />
-                    <span>Korea</span>
-                    <ul id="bs_l_1" class="sub_ul" style="display: none">
+                    <span class="plus minus">&nbsp;</span>
+                    <input type="checkbox" id="c_bs_1">
+                    <span>Korea </span>
+                    <ul id="bs_l_1" class="sub_ul" style="display: block;">
                         <li id="bf_1">
-                            <span class="plus">&nbsp;</span>
-                            <input type="checkbox" id="c_bf_1" />
-                            <span>Seoul </span>
+                            <span class="plus minus">&nbsp;</span>
+                            <input type="checkbox" id="c_bf_1">
+                            <span>Seoul</span>
                             <ul id="bf_l_1" style="display: none" class="inner_ul">
                                 <li id="io_1">
-                                    <input type="checkbox" id="c_io_1" /><span>R1 </span></li>
+                                    <input type="checkbox" name="last" id="c_io_1"><span>Last Level 1 </span></li>
                                 <li id="io_2">
-                                    <input type="checkbox" id="c_io_2" /><span>R2 </span></li>
+                                    <input type="checkbox" name="last" id="c_io_2"><span>Last Level 2 </span></li>
                                 <li id="io_3">
-                                    <input type="checkbox" id="c_io_3" /><span>R3 </span></li>
+                                    <input type="checkbox" name="last" id="c_io_3"><span>Last Level 3 </span></li>
                                 <li id="io_4">
-                                    <input type="checkbox" id="c_io_4" /><span>R4 </span></li>
+                                    <input type="checkbox" name="last" id="c_io_4"><span>Last Level 4 </span></li>
+                            </ul>
+                        </li>
+                        <li id="bf_2">
+                            <span class="plus minus">&nbsp;</span>
+                            <input type="checkbox" id="c_bf_2">
+                            <span>Incheon</span>
+                            <ul id="bf_l_2" style="display: none" class="inner_ul">
+                                <li id="io_5">
+                                    <input type="checkbox" id="c_io_5"><span>Last Level 5 </span></li>
+                                <li id="io_6">
+                                    <input type="checkbox" id="c_io_6"><span>Last Level 6 </span></li>
+                                <li id="io_7">
+                                    <input type="checkbox" id="c_io_7"><span>Last Level 7 </span></li>
+                                <li id="io_8">
+                                    <input type="checkbox" id="c_io_8"><span>Last Level 8 </span></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
                 <li id="bs_2">
                     <span class="plus">&nbsp;</span>
-                    <input type="checkbox" id="c_bs_2" />
+                    <input type="checkbox" id="c_bs_2">
                     <span>Viet Nam </span>
-                    <ul id="ulCity_1" style="display: none" class="sub_ul">
-
+                    <ul id="bs_l_2" style="display: none" class="sub_ul">
+                        <li id="bf_3">
+                            <span class="plus">&nbsp;</span>
+                            <input type="checkbox" id="c_bf_3" />
+                            <span>Sub Level 3 </span>
+                            <ul id="bf_l_3" style="display: none" class="inner_ul">
+                                <li id="io_9">
+                                    <input type="checkbox" id="c_io_9" /><span>Last Level 9 </span></li>
+                                <li id="io_10">
+                                    <input type="checkbox" id="c_io_10" /><span>Last Level 10 </span></li>
+                                <li id="io_11">
+                                    <input type="checkbox" id="c_io_11" /><span>Last Level 11 </span></li>
+                                <li id="io_12">
+                                    <input type="checkbox" id="c_io_12" /><span>Last Level 12 </span></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

@@ -153,6 +153,7 @@ const data = [{
     }
 ]
 
+
 $(document).ready(function() {
 
     var fromUlId = "ulCity";
@@ -160,7 +161,10 @@ $(document).ready(function() {
 
     document.getElementById(fromUlId).innerHTML = showRegionTree(data, fromUlId);
     document.getElementById(searchId).oninput = function() { handleRegionTree(data, fromUlId, searchId) };
+    Logic()
+})
 
+function Logic() {
     $(".plus").click(function() {
         $(this).toggleClass("minus").siblings("ul").toggle();
     })
@@ -169,11 +173,10 @@ $(document).ready(function() {
         $(this).siblings("ul").find("input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
         if ($(this).is(":checked")) {
-            // $(this).closest("li").find("input[id^=inputDistrict]").attr("disabled", true);
-            $(this).children("ul").find("input[id^=input").attr("disabled", true);
+            $(this).siblings("ul").find("input[type=checkbox]").attr("disabled", true);
+
         } else {
-            // $(this).closest("li").find("input[id^=inputDistrict]").attr("disabled", false);
-            $(this).children("ul").find("input[id^=input]").attr("disabled", false);
+            $(this).siblings("ul").find("input[type=checkbox]").attr("disabled", false);
         }
     })
 
@@ -182,8 +185,14 @@ $(document).ready(function() {
         var sDistrict = "inputDistrict";
         if (sp.substring(0, sDistrict.length) === sDistrict) {
             var ff = $(this).parents("ul[id^=ulDistrict]").attr("id");
-            if ($('#' + ff + ' > li input[type=checkbox]:checked').length == $('#' + ff + ' > li input[type=checkbox]').length) {
+            numDistrictTicked = $('#' + ff + ' > li input[type=checkbox]:checked');
+            numDistrict = $('#' + ff + ' > li input[type=checkbox]');
+            if (numDistrictTicked.length == numDistrict.length) {
                 $('#' + ff).siblings("input[type=checkbox]").prop('checked', true);
+                for (i = 0; i < numDistrict.length; i++) {
+                    $(numDistrict[i]).attr("disabled", true);
+                }
+
                 check_fst_lvl(ff);
             } else {
                 $('#' + ff).siblings("input[type=checkbox]").prop('checked', false);
@@ -194,8 +203,14 @@ $(document).ready(function() {
         if (sp.substring(0, sCity.length) === sCity) {
 
             var ss = $(this).parents("ul[id^=ulCity]").attr("id");
-            if ($('#' + ss + ' > li input[type=checkbox]:checked').length == $('#' + ss + ' > li input[type=checkbox]').length) {
+            numCityTicked = $('#' + ss + ' > li input[type=checkbox]:checked');
+            numCity = $('#' + ss + ' > li input[type=checkbox]');
+            if (numCityTicked.length == numCity.length) {
                 $('#' + ss).siblings("input[type=checkbox]").prop('checked', true);
+                for (i = 0; i < numCity.length; i++) {
+                    $(numCity[i]).attr("disabled", true);
+                }
+
                 check_fst_lvl(ss);
             } else {
                 $('#' + ss).siblings("input[type=checkbox]").prop('checked', false);
@@ -203,18 +218,26 @@ $(document).ready(function() {
             }
         }
     })
-
-})
+}
 
 function check_fst_lvl(dd) {
     var ss = $('#' + dd).parent().closest("ul").attr("id");
-    if ($('#' + ss + ' > li input[type=checkbox]:checked').length == $('#' + ss + ' > li input[type=checkbox]').length) {
+    numTicked = $('#' + ss + ' > li input[type=checkbox]:checked');
+    num = $('#' + ss + ' > li input[type=checkbox]');
+    if (numTicked.length == num.length) {
         $('#' + ss).siblings("input[type=checkbox]").prop('checked', true);
+        for (i = 1; i < num.length; i++) {
+            $(num[i]).attr("disabled", true);
+        }
+
     } else {
         $('#' + ss).siblings("input[type=checkbox]").prop('checked', false);
     }
 }
 
+// function check_parent_lv(child) {
+//     var pr = $('#' + child).parent().
+// }
 
 
 function pageLoad() {
@@ -259,6 +282,7 @@ function showRegionTree(data, fromUlId) {
     return (htmlRetStr);
 }
 
+
 function searchTree(data, string) {
     arr = [];
     for (var i = 0; i < data.length; i++) {
@@ -291,6 +315,7 @@ function handleRegionTree(data, fromUlId, searchId) {
     } else {
         document.getElementById(fromUlId).innerHTML = showRegionTree(searchTree(data, toSearch), fromUlId);
     }
+    Logic()
 }
 
 function getRegionCodeFromCountry(ulCityId) {
@@ -338,4 +363,8 @@ function getDistrictRegionCode(inputParentCode, ulParent) {
     if (cnt === inputList.length) return inputParentCode + ",";
 
     return regionCode;
+}
+
+function addTickFromCodeToTree(lstCode) {
+
 }
