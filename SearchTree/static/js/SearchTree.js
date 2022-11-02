@@ -158,7 +158,7 @@ $(document).ready(function() {
 
     var fromUlId = "ulCity";
     var searchId = "filterInput";
-    var regionCode = "A,9,C,D";
+    // var regionCode = "A,B,C,D";
 
 
     document.getElementById(fromUlId).innerHTML = showRegionTree(data, fromUlId);
@@ -171,7 +171,7 @@ $(document).ready(function() {
         });
     });
 
-    applyRegionTreeview(regionCode, fromUlId)
+    // applyRegionTreeview(regionCode, fromUlId)
 
     Logic()
 })
@@ -292,41 +292,6 @@ function showRegionTree(data, fromUlId) {
     return (htmlRetStr);
 }
 
-function searchTree(data, string) {
-    arr = [];
-    for (var i = 0; i < data.length; i++) {
-        var obj = data[i];
-        for (var key in obj) {
-            if (obj[key] == null) {
-                continue;
-            }
-            if (typeof(obj[key]) == 'object') {
-                var regionList = obj['regions']
-                for (var j = 0; j < regionList.length; j++) {
-                    var childObj = regionList[j];
-                    if (childObj['regionNm'].indexOf(string) > -1) {
-                        arr = arr.concat(childObj);
-                    }
-                }
-            } else if (key === "regionGrpNm" && obj[key].indexOf(string) > -1) {
-                arr = arr.concat(obj);
-            }
-        }
-    }
-    return arr;
-}
-
-function handleRegionTree(data, fromUlId, searchId) {
-
-    var toSearch = document.getElementById(searchId).value;
-    if (toSearch.length == 0) {
-        document.getElementById(fromUlId).innerHTML = showRegionTree(data, fromUlId);
-    } else {
-        document.getElementById(fromUlId).innerHTML = showRegionTree(searchTree(data, toSearch), fromUlId);
-    }
-    Logic()
-}
-
 function getRegionCodeFromCountry(ulCityId) {
 
     var regionCode = "";
@@ -379,38 +344,44 @@ function applyRegionTreeview(regionCode, parentId) { // "A,11,5,7"
     var parent = document.getElementById(parentId); // ulCity
     var children = parent.querySelectorAll("input");
 
+
     var countryCode = ""
     for (var i = 0; i < data.length; i++) {
         countryCode = countryCode + data[i]["regionGrpCd"] + ',';
     }
     countryCode = countryCode.slice(0, countryCode.length - 1)
 
+
     if (regionCode.length > 1) {
-        if (regionCode === countryCode) {
-            var ticked = $(document).find("ulCity").siblings("ul").children().find("input[type=checkbox]");
-            ticked.attr("disabled", true);
-            ticked.prop('checked', true);
+        if (regionCode === countryCode) { //     verify all checkbox was checked
 
-        }
+            var checkboxCountry = $(document).find("input[id=c_bs_1]"); //    id = c_bs_1 
+            checkboxCountry.prop('checked', true);
 
-        var regionCodeArr = regionCode.split(",");
-        for (var i = 0; i < regionCodeArr.length; i++) {
-            var code = regionCodeArr[i];
-            for (var j = 0; j < children.length; j++) {
-                if (children[j].getAttribute("value") === code) {
-                    if (children[j].id.indexOf("inputCity") > -1) {
-                        var str = "input[id=inputCity_" + code + "]";
-                        var Dis = $(document).find(str).siblings("ul").children().find("input[type=checkbox]");
-                        Dis.attr("disabled", true);
-                        Dis.prop('checked', true);
+            var checkboxAll = $(document).find("input[type=checkbox]:not([id=c_bs_1])"); //    id != c_bs_1 
+            checkboxAll.prop({
+                "disabled": true,
+                'checked': true
+            });
+
+        } else {
+            var regionCodeArr = regionCode.split(",");
+            for (var i = 0; i < regionCodeArr.length; i++) {
+                var code = regionCodeArr[i];
+                for (var j = 0; j < children.length; j++) {
+                    if (children[j].getAttribute("value") === code) {
+
+                        children[j].setAttribute("checked", true);
+                        if (children[j].id.indexOf("inputCity") > -1) {
+                            var checkboxDistrict = $(document).find("input[id=inputCity_" + code + "]").siblings("ul").children().find("input[type=checkbox]");
+                            checkboxDistrict.prop({
+                                "disabled": true,
+                                'checked': true
+                            })
+                        }
                     }
-
-                    children[j].setAttribute("checked", true);
-                    // need to check all children checkboxes
-                    // need to expand checkboxes when apply treeview from template
                 }
             }
         }
     }
-
 }
