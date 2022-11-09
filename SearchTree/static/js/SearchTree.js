@@ -339,11 +339,13 @@ function getDistrictRegionCode(inputParentCode, ulParent) {
     return regionCode;
 }
 
-function applyRegionTreeview(regionCode, parentId) { // "A,11,5,7"
-
-    var parent = document.getElementById(parentId); // ulCity
-    var children = parent.querySelectorAll("input");
-
+function applyRegionTreeview(regionCode) { // "A,11,5,7"
+    $("#bs_main").find(":checkbox").each(function() {
+        $(this).prop({
+            "disabled": false,
+            'checked': false
+        });
+    });
 
     var countryCode = ""
     for (var i = 0; i < data.length; i++) {
@@ -352,7 +354,7 @@ function applyRegionTreeview(regionCode, parentId) { // "A,11,5,7"
     countryCode = countryCode.slice(0, countryCode.length - 1)
 
 
-    if (regionCode.length > 1) {
+    if (regionCode.length > 0) {
         if (regionCode === countryCode) { //     verify all checkbox was checked
 
             var checkboxCountry = $(document).find("input[id=c_bs_1]"); //    id = c_bs_1 
@@ -368,19 +370,23 @@ function applyRegionTreeview(regionCode, parentId) { // "A,11,5,7"
             var regionCodeArr = regionCode.split(",");
             for (var i = 0; i < regionCodeArr.length; i++) {
                 var code = regionCodeArr[i];
-                for (var j = 0; j < children.length; j++) {
-                    if (children[j].getAttribute("value") === code) {
+                $("#bs_main").find(":checkbox").each(function() {
+                    if ($(this).val() === code) {
+                        $(this).prop({
+                            "disabled": false,
+                            'checked': true
+                        });
+                        if ($(this)[0].id.indexOf("inputCity") > -1) {
+                            var checkboxDistrict = $(this).siblings("ul").children().find("input[type=checkbox]");
 
-                        children[j].setAttribute("checked", true);
-                        if (children[j].id.indexOf("inputCity") > -1) {
-                            var checkboxDistrict = $(document).find("input[id=inputCity_" + code + "]").siblings("ul").children().find("input[type=checkbox]");
                             checkboxDistrict.prop({
                                 "disabled": true,
                                 'checked': true
                             })
                         }
                     }
-                }
+
+                });
             }
         }
     }
