@@ -1,4 +1,4 @@
-const data = [{
+const olddata = [{
         "regionGrpCd": "A",
         "regionGrpNm": "Seoul",
         "createDt": null,
@@ -153,6 +153,195 @@ const data = [{
     }
 ]
 
+const dataRegion = [{
+        "rowNum": 0,
+        "regionCd": "1",
+        "regionNm": "HA NOI",
+        "level": 1,
+        "regions": [{
+                "rowNum": 0,
+                "regionCd": "11",
+                "regionNm": "nam tu liem",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "12",
+                "regionNm": "ba dinh",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "13",
+                "regionNm": "dai ba trung",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "14",
+                "regionNm": "dong anh",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "15",
+                "regionNm": "hoan kiem",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "16",
+                "regionNm": "long bien",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "17",
+                "regionNm": "doai duc",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "18",
+                "regionNm": "ba vi",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "19",
+                "regionNm": "ha dong",
+                "level": 2,
+                "regions": null
+            }
+        ]
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "2",
+        "regionNm": "SAI GON",
+        "level": 1,
+        "regions": [{
+                "rowNum": 0,
+                "regionCd": "20",
+                "regionNm": "quan 1",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "21",
+                "regionNm": "quan 2",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "22",
+                "regionNm": "quan 7",
+                "level": 2,
+                "regions": null
+            },
+            {
+                "rowNum": 0,
+                "regionCd": "23",
+                "regionNm": "quan 12",
+                "level": 2,
+                "regions": null
+            }
+        ]
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "A",
+        "regionNm": "HAI DUONG",
+        "level": 1,
+        "regions": [{
+            "rowNum": 0,
+            "regionCd": "AA",
+            "regionNm": "Thanh Ha",
+            "level": 2,
+            "regions": null
+        }]
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "B",
+        "regionNm": "upper 2",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "C",
+        "regionNm": "upper 3",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "D",
+        "regionNm": "upper 4",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "E",
+        "regionNm": "upper E",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "F",
+        "regionNm": "UPPER F",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "G",
+        "regionNm": "UPPER G",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "H",
+        "regionNm": "UPPER H",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "I",
+        "regionNm": "UPPER I",
+        "level": 1,
+        "regions": []
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "K",
+        "regionNm": "UPPER K",
+        "level": 1,
+        "regions": null
+    },
+    {
+        "rowNum": 0,
+        "regionCd": "L",
+        "regionNm": "UPPER L",
+        "level": 1,
+        "regions": null
+    }
+]
 
 $(document).ready(function() {
 
@@ -161,7 +350,7 @@ $(document).ready(function() {
     // var regionCode = "A,B,C,D";
 
 
-    document.getElementById(fromUlId).innerHTML = showRegionTree(data, fromUlId);
+    document.getElementById(fromUlId).innerHTML = showRegionTree(dataRegion, fromUlId);
     // document.getElementById(searchId).oninput = function() { handleRegionTree(data, fromUlId, searchId) };
 
     $("#" + searchId).on("keyup", function() {
@@ -258,10 +447,10 @@ function pageLoad() {
 
 
 function showRegionTree(data, fromUlId) {
-    var regionGrpNm = "regionGrpNm";
-    var regionGrpCd = "regionGrpCd";
     var regionNm = "regionNm";
     var regionCd = "regionCd";
+    var levelCity = 1;
+    var levelDistrict = 2;
 
     var htmlRetStr = "";
 
@@ -273,22 +462,25 @@ function showRegionTree(data, fromUlId) {
             }
             if (typeof(obj[key]) == 'object') {
                 var Child_obj = obj[key];
-                fromUlId = "ulDistrict_" + obj[regionGrpCd];
+                fromUlId = "ulDistrict_" + obj[regionCd];
                 htmlRetStr += showRegionTree(Child_obj, fromUlId);
                 htmlRetStr += '</ul></li>';
-            } else if (key == regionGrpNm) {
-                htmlRetStr += "<li id='bf_" + obj[regionGrpCd] + "'>";
-                htmlRetStr += "<span class='plus minus'></span>";
-                htmlRetStr += "<input id ='inputCity_" + obj[regionGrpCd] + "' type='checkbox' value = '" + obj[regionGrpCd] + "'>";
-                htmlRetStr += "<span>" + obj[regionGrpNm] + "</span>";
-                htmlRetStr += "<ul id='ulDistrict_" + obj[regionGrpCd] + "' class='inner_ul' style='display:block'>";
-            } else if (key == regionNm) {
-                htmlRetStr += "<li id='liDistrict_" + obj[regionCd] + "'>";
-                htmlRetStr += "<input type='checkbox' id='inputDistrict_" + obj[regionCd] + "' value='" + obj[regionCd] + "'>";
-                htmlRetStr += "<span>" + obj[regionNm] + "</span>";
+            } else if (key == "level") {
+                if (obj[key] == levelCity) {
+                    htmlRetStr += "<li id='bf_" + obj[regionCd] + "'>";
+                    htmlRetStr += "<span class='plus minus'></span>";
+                    htmlRetStr += "<input id ='inputCity_" + obj[regionCd] + "' type='checkbox' value = '" + obj[regionCd] + "'>";
+                    htmlRetStr += "<span>" + obj[regionNm] + "</span>";
+                    htmlRetStr += "<ul id='ulDistrict_" + obj[regionCd] + "' class='inner_ul' style='display:block'>";
+                } else if (obj[key] == levelDistrict) {
+                    htmlRetStr += "<li id='liDistrict_" + obj[regionCd] + "'>";
+                    htmlRetStr += "<input type='checkbox' id='inputDistrict_" + obj[regionCd] + "' value='" + obj[regionCd] + "'>";
+                    htmlRetStr += "<span>" + obj[regionNm] + "</span>";
+                }
             }
         }
     }
+    // htmlRetStr += '</ul></li>';
     return (htmlRetStr);
 }
 
