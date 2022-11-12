@@ -332,14 +332,14 @@ const dataRegion = [{
         "regionCd": "K",
         "regionNm": "UPPER K",
         "level": 1,
-        "regions": null
+        "regions": []
     },
     {
         "rowNum": 0,
         "regionCd": "L",
         "regionNm": "UPPER L",
         "level": 1,
-        "regions": null
+        "regions": []
     }
 ]
 
@@ -484,51 +484,13 @@ function showRegionTree(data, fromUlId) {
     return (htmlRetStr);
 }
 
-function getRegionCodeFromCountry(ulCityId) {
+function getRegionCode() {
+    var regionCode = ""
+    $("#bs_main").find(":checked").not(":disabled").each(function() {
+        regionCode = regionCode + $(this).val() + ",";
+    })
 
-    var regionCode = "";
-    var ulCity = document.getElementById(ulCityId);
-
-    // var liList = ulCity.querySelectorAll("li[id^=bf_ulCity]");
-    var liList = ulCity.querySelectorAll("li[id^=bf_]");
-
-    for (i = 0; i < liList.length; i++) {
-        regionCode += getRegionCodeFromCityLi(liList[i].id);
-    }
-
-    regionCode = regionCode.substring(0, regionCode.length - 1); // remove the last ","
-
-    return regionCode;
-}
-
-function getRegionCodeFromCityLi(liId) { // liId = bf_ulCity_11
-    var cityLi = document.getElementById(liId);
-
-    var inputCity = cityLi.querySelector("input[id^=inputCity]");
-    var cityCode = inputCity.value; // get city code
-
-    var ulParent = cityLi.querySelector("ul[id^=ulDistrict]");
-
-    var districtRegionCode = getDistrictRegionCode(cityCode, ulParent);
-
-    console.log(districtRegionCode);
-    return districtRegionCode;
-
-}
-
-function getDistrictRegionCode(inputParentCode, ulParent) {
-    var regionCode = "";
-    var inputList = ulParent.querySelectorAll("input");
-    var cnt = 0;
-    for (let i = 0; i < inputList.length; i++) {
-        if (inputList[i].checked) {
-            regionCode += inputList[i].value + ",";
-            cnt++;
-        }
-    }
-    if (cnt === inputList.length) return inputParentCode + ",";
-
-    return regionCode;
+    return regionCode.slice(0, regionCode.length - 1)
 }
 
 function applyRegionTreeview(regionCode) { // "A,11,5,7"
@@ -540,8 +502,8 @@ function applyRegionTreeview(regionCode) { // "A,11,5,7"
     });
 
     var countryCode = ""
-    for (var i = 0; i < data.length; i++) {
-        countryCode = countryCode + data[i]["regionGrpCd"] + ',';
+    for (var i = 0; i < dataRegion.length; i++) {
+        countryCode = countryCode + dataRegion[i]["regionCd"] + ',';
     }
     countryCode = countryCode.slice(0, countryCode.length - 1)
 
