@@ -484,12 +484,21 @@ function showRegionTree(data, fromUlId) {
     return (htmlRetStr);
 }
 
-function getRegionCode() {
+function getRegionCode(dataRegion) {
     var regionCode = ""
-    $("#bs_main").find(":checked").not(":disabled").each(function() {
-        regionCode = regionCode + $(this).val() + ",";
-    })
 
+    var allRegionLength = $("#bs_main").find(":checkbox").length;
+    var checkedRegionLength = $("#bs_main").find(":checked").length;
+    if (checkedRegionLength == allRegionLength) {
+        for (var i = 0; i < dataRegion.length; i++) {
+            regionCode += dataRegion[i]["regionCd"] + ","
+        }
+
+    } else {
+        $("#bs_main").find(":checked").not(":disabled").each(function() {
+            regionCode = regionCode + $(this).val() + ",";
+        })
+    }
     return regionCode.slice(0, regionCode.length - 1)
 }
 
