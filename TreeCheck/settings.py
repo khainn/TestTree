@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from mongoengine import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'Pulls.apps.PullsConfig',
-    'SearchTree.apps.SearchtreeConfig'
+    'Pulls',
+    'SearchTree',
+    "django_mongoengine",
 ]
 
 MIDDLEWARE = [
@@ -83,7 +85,22 @@ DATABASES = {
     }
 }
 
+database_name = "treeTest"
+database_host = "localhost"
+database_password = "1qazXSW@"
+database_user = "admin"
+# MongoDB settings
+MONGODB_DATABASES = {
+    "default": {
+        "name": database_name,
+        "host": database_host,
+        "password": database_password,
+        "username": database_user,
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
+}
 
+connect('mydb')
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
